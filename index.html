@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTISAN BILLIARDS | 匠造台球</title>
+    <title>ARTISAN BILLIARDS | 匠造台球 — 高端手工台球品牌</title>
+    <meta name="description" content="ARTISAN BILLIARDS 匠造台球，创立于1987年，专注于高端手工台球桌的打造。每一张球台历经127道工序、6个月精心制作，为全球42个国家的台球爱好者提供顶级竞技体验。">
+    <meta name="keywords" content="高端台球桌,手工台球,斯诺克球台,九球桌,Artisan Billiards,匠造台球,台球品牌,限量台球桌">
+    <meta name="author" content="ARTISAN BILLIARDS">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zzd1154.github.io/billiard-website/">
+    <meta property="og:title" content="ARTISAN BILLIARDS | 匠造台球 — 高端手工台球品牌">
+    <meta property="og:description" content="创立于1987年，专注于高端手工台球桌的打造。每一张球台历经127道工序、6个月精心制作。">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1200&q=80">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://zzd1154.github.io/billiard-website/">
+    <meta property="twitter:title" content="ARTISAN BILLIARDS | 匠造台球">
+    <meta property="twitter:description" content="创立于1987年，专注于高端手工台球桌的打造。">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1200&q=80">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://zzd1154.github.io/billiard-website/">
+
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://assets.mixkit.co">
+    <link rel="dns-prefetch" href="https://formspree.io">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --warm-black: #0a0a0a;
@@ -27,12 +60,43 @@
             scroll-behavior: smooth;
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         body {
             font-family: 'Inter', 'Noto Serif SC', sans-serif;
             background: var(--warm-black);
             color: var(--cream);
             overflow-x: hidden;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--amber);
+            color: var(--warm-black);
+            padding: 8px 16px;
+            z-index: 10000;
+            text-decoration: none;
+            font-size: 14px;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
 
         /* ===== LOADER ===== */
@@ -98,11 +162,13 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            will-change: transform, background, padding;
         }
 
         .nav.scrolled {
             background: rgba(10, 10, 10, 0.92);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px 60px;
             border-bottom: 1px solid rgba(200, 149, 108, 0.1);
         }
@@ -115,6 +181,7 @@
             color: var(--cream);
             text-decoration: none;
             position: relative;
+            z-index: 1002;
         }
 
         .nav-logo::after {
@@ -161,12 +228,96 @@
             transform: translateX(-50%);
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--gold);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1002;
+            background: none;
+            border: none;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--cream);
+            transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+            transform-origin: center;
+        }
+
+        .mobile-menu-btn.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            transition: right 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            color: var(--cream);
+            text-decoration: none;
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .mobile-menu.open a {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu.open a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.open a:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.open a:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.open a:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-menu.open a:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
         }
 
         /* ===== HERO SECTION ===== */
@@ -187,6 +338,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            background: var(--warm-black);
         }
 
         .hero-video-container::before {
@@ -222,6 +374,11 @@
             height: 100%;
             object-fit: cover;
             animation: heroZoom 20s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        .hero-video[paused] {
+            animation-play-state: paused;
         }
 
         @keyframes heroZoom {
@@ -428,6 +585,7 @@
             object-fit: cover;
             filter: brightness(0.8) contrast(1.1);
             transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+            will-change: transform;
         }
 
         .philosophy-image:hover img {
@@ -456,6 +614,7 @@
             color: rgba(212, 165, 116, 0.08);
             line-height: 1;
             margin-bottom: -40px;
+            user-select: none;
         }
 
         .philosophy-title {
@@ -522,7 +681,6 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            group: true;
         }
 
         .collection-card-image {
@@ -537,6 +695,7 @@
             object-fit: cover;
             transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), filter 0.8s;
             filter: brightness(0.75);
+            will-change: transform;
         }
 
         .collection-card:hover .collection-card-image img {
@@ -767,6 +926,7 @@
             cursor: pointer;
             transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
             position: relative;
+            background: none;
         }
 
         .craftsmanship-play::before {
@@ -873,6 +1033,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+            will-change: transform;
         }
 
         .product-card:hover .product-image img {
@@ -1182,6 +1343,28 @@
             left: 0;
         }
 
+        .contact-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-status {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            min-height: 20px;
+            transition: all 0.4s;
+        }
+
+        .form-status.success {
+            color: #7cb342;
+        }
+
+        .form-status.error {
+            color: #e57373;
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             padding: 80px 60px 40px;
@@ -1238,6 +1421,7 @@
             text-decoration: none;
             font-size: 13px;
             transition: color 0.4s;
+            cursor: pointer;
         }
 
         .footer-links a:hover {
@@ -1263,7 +1447,11 @@
 
         .footer-social a {
             color: rgba(245, 237, 228, 0.5);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
             transition: color 0.4s;
+            cursor: pointer;
         }
 
         .footer-social a:hover {
@@ -1286,22 +1474,6 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* ===== MOBILE MENU ===== */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .mobile-menu-btn span {
-            width: 24px;
-            height: 1px;
-            background: var(--cream);
-            transition: all 0.4s;
-        }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
@@ -1376,6 +1548,12 @@
                 gap: 40px;
             }
 
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
             .testimonial-slide {
                 padding: 0 40px;
             }
@@ -1396,6 +1574,7 @@
             z-index: 9998;
             transition: transform 0.15s, opacity 0.15s;
             mix-blend-mode: difference;
+            will-change: transform, left, top;
         }
 
         .cursor-dot {
@@ -1407,6 +1586,7 @@
             pointer-events: none;
             z-index: 9998;
             transition: transform 0.08s;
+            will-change: transform, left, top;
         }
 
         .cursor.hover {
@@ -1428,6 +1608,7 @@
             z-index: 0;
             filter: blur(100px);
             opacity: 0.03;
+            will-change: transform;
         }
 
         .orb-1 {
@@ -1445,11 +1626,61 @@
             bottom: 20%;
             left: -5%;
         }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .nav, .hero-video-container, .hero-scroll, .cursor, .cursor-dot,
+            .floating-orb, .mobile-menu-btn, .hero-cta, .craftsmanship-video,
+            .testimonials-arrows, .testimonials-nav, .contact-submit,
+            .craftsmanship-play, .loader {
+                display: none !important;
+            }
+
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+
+            .hero {
+                height: auto !important;
+                min-height: 300px !important;
+                background: #fff !important;
+            }
+
+            .hero-content {
+                position: relative !important;
+            }
+
+            .hero-title, .hero-desc, .section-title, .philosophy-title,
+            .collection-card-title, .product-name, .craftsmanship-title,
+            .contact-title, .testimonial-quote, .testimonial-author,
+            .experience-number, .experience-label, .footer-brand {
+                color: #000 !important;
+            }
+
+            section {
+                padding: 40px 20px !important;
+                background: #fff !important;
+            }
+
+            .product-card, .collection-card {
+                border: 1px solid #ddd !important;
+                break-inside: avoid;
+            }
+
+            img {
+                filter: none !important;
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-link">跳转到主内容</a>
+
     <!-- Loader -->
-    <div class="loader" id="loader">
+    <div class="loader" id="loader" role="status" aria-label="页面加载中">
         <div class="loader-content">
             <div class="loader-text">ARTISAN BILLIARDS</div>
             <div class="loader-line"></div>
@@ -1457,34 +1688,46 @@
     </div>
 
     <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
     <!-- Floating Orbs -->
-    <div class="floating-orb orb-1"></div>
-    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-1" aria-hidden="true"></div>
+    <div class="floating-orb orb-2" aria-hidden="true"></div>
 
     <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <a href="#" class="nav-logo">ARTISAN</a>
+    <nav class="nav" id="nav" role="navigation" aria-label="主导航">
+        <a href="#" class="nav-logo" aria-label="ARTISAN BILLIARDS 首页">ARTISAN</a>
         <ul class="nav-links">
-            <li><a href="#philosophy">品牌理念</a></li>
-            <li><a href="#collections">系列作品</a></li>
-            <li><a href="#craftsmanship">匠心工艺</a></li>
-            <li><a href="#products">甄选产品</a></li>
-            <li><a href="#contact">联系我们</a></li>
+            <li><a href="#philosophy" data-section="philosophy">品牌理念</a></li>
+            <li><a href="#collections" data-section="collections">系列作品</a></li>
+            <li><a href="#craftsmanship" data-section="craftsmanship">匠心工艺</a></li>
+            <li><a href="#products" data-section="products">甄选产品</a></li>
+            <li><a href="#contact" data-section="contact">联系我们</a></li>
         </ul>
-        <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu">
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </button>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="移动端菜单" aria-hidden="true">
+        <a href="#philosophy" class="mobile-nav-link">品牌理念</a>
+        <a href="#collections" class="mobile-nav-link">系列作品</a>
+        <a href="#craftsmanship" class="mobile-nav-link">匠心工艺</a>
+        <a href="#products" class="mobile-nav-link">甄选产品</a>
+        <a href="#contact" class="mobile-nav-link">联系我们</a>
+    </div>
+
+    <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" aria-label="首屏">
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1920&q=80">
+            <video class="hero-video" autoplay muted loop playsinline
+                poster="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1920&q=80"
+                aria-label="台球击打慢动作视频">
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-person-hitting-a-pool-ball-42911-large.mp4" type="video/mp4">
             </video>
         </div>
@@ -1492,40 +1735,40 @@
             <p class="hero-subtitle">Est. 1987 &middot; Handcrafted Excellence</p>
             <h1 class="hero-title">每一击<br>皆是<em>艺术</em></h1>
             <p class="hero-desc">三十七年来，我们始终相信：台球桌不仅是竞技的舞台，更是匠人精神与美学追求的完美融合</p>
-            <a href="#collections" class="hero-cta">
+            <a href="#collections" class="hero-cta" aria-label="探索台球系列">
                 探索系列
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
             </a>
         </div>
-        <div class="hero-scroll">
+        <div class="hero-scroll" aria-hidden="true">
             <span class="hero-scroll-text">Scroll</span>
             <div class="hero-scroll-line"></div>
         </div>
     </section>
 
     <!-- Philosophy Section -->
-    <section class="philosophy" id="philosophy">
+    <section class="philosophy" id="philosophy" aria-label="品牌理念">
         <div class="philosophy-grid">
             <div class="philosophy-image reveal">
-                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&q=80" alt="台球工艺">
+                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&q=80" alt="台球匠人手工打磨台球桌石板的特写画面" loading="lazy">
             </div>
             <div class="philosophy-content">
-                <div class="philosophy-number reveal">01</div>
+                <div class="philosophy-number reveal" aria-hidden="true">01</div>
                 <h2 class="philosophy-title reveal reveal-delay-1">传承百年的<br>手工技艺</h2>
                 <p class="philosophy-text reveal reveal-delay-2">
                     每一块石板都经过三个月的自然风干，每一根台呢都由经验超过二十年的老师傅手工铺装。
                     我们不追求产量，只执着于每一毫米的完美。这是 Artisan 的信仰，也是我们对每一位玩家的承诺。
                     从选材到成品，需要经过 127 道工序，历时 6 个月方能完成一张真正意义上的顶级球台。
                 </p>
-                <a href="#" class="philosophy-link reveal reveal-delay-3">了解工艺</a>
+                <a href="#craftsmanship" class="philosophy-link reveal reveal-delay-3">了解工艺</a>
             </div>
         </div>
     </section>
 
     <!-- Collections Section -->
-    <section class="collections" id="collections">
+    <section class="collections" id="collections" aria-label="典藏系列">
         <div class="section-header">
             <span class="section-label reveal">Collections</span>
             <h2 class="section-title reveal reveal-delay-1">典藏<em>系列</em></h2>
@@ -1533,7 +1776,7 @@
         <div class="collections-grid">
             <div class="collection-card reveal">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=600&q=80" alt="大师系列">
+                    <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=600&q=80" alt="大师系列台球桌，深色实木框架搭配绿色台呢" loading="lazy">
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1545,7 +1788,7 @@
             </div>
             <div class="collection-card reveal reveal-delay-1">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="典藏系列">
+                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="典藏系列台球桌，复古风格设计" loading="lazy">
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1557,7 +1800,7 @@
             </div>
             <div class="collection-card reveal reveal-delay-2">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="限量系列">
+                    <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="限量系列台球桌，奢华定制设计" loading="lazy">
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1571,7 +1814,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section class="experience" id="experience">
+    <section class="experience" id="experience" aria-label="沉浸体验">
         <div class="experience-container">
             <div class="section-header">
                 <span class="section-label reveal">Experience</span>
@@ -1580,7 +1823,7 @@
             <div class="experience-grid">
                 <div class="experience-item reveal">
                     <div class="experience-icon">
-                        <svg viewBox="0 0 24 24">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 6v6l4 2"/>
                         </svg>
@@ -1590,7 +1833,7 @@
                 </div>
                 <div class="experience-item reveal reveal-delay-1">
                     <div class="experience-icon">
-                        <svg viewBox="0 0 24 24">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                         </svg>
                     </div>
@@ -1599,7 +1842,7 @@
                 </div>
                 <div class="experience-item reveal reveal-delay-2">
                     <div class="experience-icon">
-                        <svg viewBox="0 0 24 24">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                         </svg>
                     </div>
@@ -1608,7 +1851,7 @@
                 </div>
                 <div class="experience-item reveal reveal-delay-3">
                     <div class="experience-icon">
-                        <svg viewBox="0 0 24 24">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                             <circle cx="12" cy="10" r="3"/>
                         </svg>
@@ -1621,24 +1864,26 @@
     </section>
 
     <!-- Craftsmanship Video Section -->
-    <section class="craftsmanship" id="craftsmanship">
-        <video class="craftsmanship-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=1920&q=80">
+    <section class="craftsmanship" id="craftsmanship" aria-label="匠心工艺">
+        <video class="craftsmanship-video" autoplay muted loop playsinline
+            poster="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=1920&q=80"
+            aria-label="匠人手工制作台球桌工艺视频">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-hitting-a-pool-ball-42910-large.mp4" type="video/mp4">
         </video>
         <div class="craftsmanship-overlay"></div>
         <div class="craftsmanship-content">
-            <div class="craftsmanship-play" id="playBtn">
-                <svg viewBox="0 0 24 24">
+            <button class="craftsmanship-play" id="playBtn" aria-label="播放工艺视频">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
-            </div>
+            </button>
             <h2 class="craftsmanship-title">匠心工艺</h2>
             <p class="craftsmanship-text">观看我们如何用双手赋予木材生命，打造世界级的台球体验</p>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section class="products" id="products">
+    <section class="products" id="products" aria-label="甄选产品">
         <div class="products-container">
             <div class="section-header">
                 <span class="section-label reveal">Products</span>
@@ -1647,50 +1892,50 @@
             <div class="products-grid">
                 <div class="product-card reveal">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35?w=600&q=80" alt="黑檀大师台">
+                        <img src="https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35?w=600&q=80" alt="黑檀大师台，非洲黑檀实木框架台球桌" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-category">Master Series</div>
                         <h3 class="product-name">黑檀大师台</h3>
                         <p class="product-desc">采用非洲黑檀实木框架，配以爱尔兰进口台呢，专为顶级赛事设计</p>
                         <div class="product-price">¥ 168,000</div>
-                        <button class="product-btn">了解详情</button>
+                        <button class="product-btn" data-product="黑檀大师台" aria-label="了解黑檀大师台详情">了解详情</button>
                     </div>
                 </div>
                 <div class="product-card reveal reveal-delay-1">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="胡桃木典藏台">
+                        <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="胡桃木典藏台，北美黑胡桃木复古台球桌" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-category">Heritage Series</div>
                         <h3 class="product-name">胡桃木典藏台</h3>
                         <p class="product-desc">北美黑胡桃木打造，复古铜件装饰，致敬黄金时代的优雅</p>
                         <div class="product-price">¥ 98,000</div>
-                        <button class="product-btn">了解详情</button>
+                        <button class="product-btn" data-product="胡桃木典藏台" aria-label="了解胡桃木典藏台详情">了解详情</button>
                     </div>
                 </div>
                 <div class="product-card reveal reveal-delay-2">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=600&q=80" alt="碳纤维竞技台">
+                        <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=600&q=80" alt="碳纤维竞技台，现代简约风格" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-category">Pro Series</div>
                         <h3 class="product-name">碳纤维竞技台</h3>
                         <p class="product-desc">航天级碳纤维结构，极致平整度，为职业选手而生</p>
                         <div class="product-price">¥ 128,000</div>
-                        <button class="product-btn">了解详情</button>
+                        <button class="product-btn" data-product="碳纤维竞技台" aria-label="了解碳纤维竞技台详情">了解详情</button>
                     </div>
                 </div>
                 <div class="product-card reveal reveal-delay-3">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="限量版金箔台">
+                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="限量版金箔台，奢华金箔装饰台球桌" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-category">Limited Edition</div>
                         <h3 class="product-name">限量版金箔台</h3>
                         <p class="product-desc">24K金箔手工贴饰，全球限量 50 台，附收藏证书</p>
                         <div class="product-price">¥ 388,000</div>
-                        <button class="product-btn">了解详情</button>
+                        <button class="product-btn" data-product="限量版金箔台" aria-label="了解限量版金箔台详情">了解详情</button>
                     </div>
                 </div>
             </div>
@@ -1698,76 +1943,79 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
+    <section class="testimonials" id="testimonials" aria-label="玩家心声">
         <div class="testimonials-container">
             <div class="section-header">
                 <span class="section-label reveal">Testimonials</span>
                 <h2 class="section-title reveal reveal-delay-1">玩家<em>心声</em></h2>
             </div>
-            <div class="testimonials-slider">
+            <div class="testimonials-slider" role="region" aria-label="用户评价轮播">
                 <div class="testimonials-track" id="testimonialsTrack">
                     <div class="testimonial-slide active">
-                        <p class="testimonial-quote">"在 Artisan 的球台上打球是一种修行。每一次击球，你都能感受到匠人的温度——那种对完美的执着，让比赛超越了胜负本身。"</p>
+                        <blockquote class="testimonial-quote">"在 Artisan 的球台上打球是一种修行。每一次击球，你都能感受到匠人的温度——那种对完美的执着，让比赛超越了胜负本身。"</blockquote>
                         <div class="testimonial-author">丁俊晖</div>
                         <div class="testimonial-role">斯诺克大师赛冠军</div>
                     </div>
                     <div class="testimonial-slide">
-                        <p class="testimonial-quote">"我拥有过许多球台，但 Artisan 的典藏系列让我找到了真正的心之所向。它不仅是一件竞技器材，更是一件值得传承的艺术品。"</p>
+                        <blockquote class="testimonial-quote">"我拥有过许多球台，但 Artisan 的典藏系列让我找到了真正的心之所向。它不仅是一件竞技器材，更是一件值得传承的艺术品。"</blockquote>
                         <div class="testimonial-author">Robert Smith</div>
                         <div class="testimonial-role">美国九球公开赛冠军</div>
                     </div>
                     <div class="testimonial-slide">
-                        <p class="testimonial-quote">"作为一家高端私人会所，我们选择了 Artisan 的大师系列。三年过去了，每一张球台依然如新，这就是真正匠心品质的最好证明。"</p>
+                        <blockquote class="testimonial-quote">"作为一家高端私人会所，我们选择了 Artisan 的大师系列。三年过去了，每一张球台依然如新，这就是真正匠心品质的最好证明。"</blockquote>
                         <div class="testimonial-author">陈明远</div>
                         <div class="testimonial-role">璞瑄会所 创始人</div>
                     </div>
                 </div>
                 <div class="testimonials-arrows">
-                    <button class="testimonials-arrow" id="prevBtn">&#8249;</button>
-                    <button class="testimonials-arrow" id="nextBtn">&#8250;</button>
+                    <button class="testimonials-arrow" id="prevBtn" aria-label="上一条评价">&#8249;</button>
+                    <button class="testimonials-arrow" id="nextBtn" aria-label="下一条评价">&#8250;</button>
                 </div>
             </div>
-            <div class="testimonials-nav" id="testimonialsNav">
-                <button class="testimonials-dot active"></button>
-                <button class="testimonials-dot"></button>
-                <button class="testimonials-dot"></button>
+            <div class="testimonials-nav" id="testimonialsNav" role="tablist" aria-label="评价导航">
+                <button class="testimonials-dot active" role="tab" aria-label="第1条评价" aria-selected="true"></button>
+                <button class="testimonials-dot" role="tab" aria-label="第2条评价" aria-selected="false"></button>
+                <button class="testimonials-dot" role="tab" aria-label="第3条评价" aria-selected="false"></button>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" aria-label="联系我们">
         <div class="contact-container">
             <h2 class="contact-title reveal">开启您的<br>专属体验</h2>
             <p class="contact-text reveal reveal-delay-1">预约私人品鉴，让我们的顾问为您量身推荐最合适的球台</p>
-            <form class="contact-form reveal reveal-delay-2">
+            <form class="contact-form reveal reveal-delay-2" id="contactForm" action="https://formspree.io/f/xnnpbyqb" method="POST">
                 <div class="contact-form-group">
-                    <input type="text" placeholder=" " required>
+                    <input type="text" name="name" placeholder=" " required aria-required="true" aria-label="您的姓名">
                     <label>您的姓名</label>
                 </div>
                 <div class="contact-form-group">
-                    <input type="tel" placeholder=" " required>
+                    <input type="tel" name="phone" placeholder=" " required aria-required="true" aria-label="联系电话">
                     <label>联系电话</label>
                 </div>
                 <div class="contact-form-group">
-                    <input type="email" placeholder=" ">
+                    <input type="email" name="email" placeholder=" " aria-label="电子邮箱">
                     <label>电子邮箱</label>
                 </div>
                 <div class="contact-form-group">
-                    <input type="text" placeholder=" ">
+                    <input type="text" name="city" placeholder=" " aria-label="所在城市">
                     <label>所在城市</label>
                 </div>
                 <div class="contact-form-group full">
-                    <textarea placeholder=" "></textarea>
+                    <textarea name="message" placeholder=" " aria-label="留言内容"></textarea>
                     <label>留言内容</label>
                 </div>
-                <button type="submit" class="contact-submit">提交预约</button>
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+                <button type="submit" class="contact-submit" id="submitBtn">提交预约</button>
+                <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
             </form>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-top">
                 <div>
@@ -1777,37 +2025,37 @@
                 <div>
                     <div class="footer-title">产品系列</div>
                     <ul class="footer-links">
-                        <li><a href="#">大师系列</a></li>
-                        <li><a href="#">典藏系列</a></li>
-                        <li><a href="#">限量系列</a></li>
-                        <li><a href="#">配件周边</a></li>
+                        <li><a href="#collections">大师系列</a></li>
+                        <li><a href="#collections">典藏系列</a></li>
+                        <li><a href="#collections">限量系列</a></li>
+                        <li><a href="#products">配件周边</a></li>
                     </ul>
                 </div>
                 <div>
                     <div class="footer-title">关于我们</div>
                     <ul class="footer-links">
-                        <li><a href="#">品牌故事</a></li>
-                        <li><a href="#">匠心工艺</a></li>
-                        <li><a href="#">新闻动态</a></li>
-                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#philosophy">品牌故事</a></li>
+                        <li><a href="#craftsmanship">匠心工艺</a></li>
+                        <li><a href="#testimonials">新闻动态</a></li>
+                        <li><a href="#contact">加入我们</a></li>
                     </ul>
                 </div>
                 <div>
                     <div class="footer-title">客户服务</div>
                     <ul class="footer-links">
-                        <li><a href="#">预约品鉴</a></li>
-                        <li><a href="#">售后保障</a></li>
-                        <li><a href="#">门店查询</a></li>
-                        <li><a href="#">联系客服</a></li>
+                        <li><a href="#contact">预约品鉴</a></li>
+                        <li><a href="#contact">售后保障</a></li>
+                        <li><a href="#contact">门店查询</a></li>
+                        <li><a href="#contact">联系客服</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div class="footer-copy">&copy; 2024 Artisan Billiards. All rights reserved.</div>
                 <div class="footer-social">
-                    <a href="#">WeChat</a>
-                    <a href="#">Weibo</a>
-                    <a href="#">Instagram</a>
+                    <a role="button" tabindex="0" data-platform="微信">WeChat</a>
+                    <a role="button" tabindex="0" data-platform="微博">Weibo</a>
+                    <a role="button" tabindex="0" data-platform="Instagram">Instagram</a>
                 </div>
             </div>
         </div>
@@ -1849,21 +2097,71 @@
         animateCursor();
 
         // Hover effects for cursor
-        const hoverElements = document.querySelectorAll('a, button, .collection-card, .product-card');
+        const hoverElements = document.querySelectorAll('a, button, .collection-card, .product-card, .testimonials-arrow, .testimonials-dot');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // ===== NAVIGATION SCROLL =====
+        // ===== NAVIGATION SCROLL (RAF throttled) =====
         const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
+        let lastScrollY = 0;
+        let ticking = false;
+
+        function updateNav() {
             if (window.scrollY > 100) {
                 nav.classList.add('scrolled');
             } else {
                 nav.classList.remove('scrolled');
             }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.scrollY;
+            if (!ticking) {
+                requestAnimationFrame(updateNav);
+                ticking = true;
+            }
         });
+
+        // ===== MOBILE MENU =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMobileMenu() {
+            const isOpen = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open');
+            mobileMenuBtn.classList.toggle('open');
+            mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+            mobileMenu.setAttribute('aria-hidden', isOpen);
+            document.body.style.overflow = isOpen ? '' : 'hidden';
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggleMobileMenu();
+            });
+        });
+
+        // ===== NAVIGATION HIGHLIGHT =====
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.dataset.section === id);
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+        sections.forEach(section => sectionObserver.observe(section));
 
         // ===== SCROLL REVEAL =====
         const revealElements = document.querySelectorAll('.reveal');
@@ -1894,13 +2192,14 @@
         function animateCounter(element, target) {
             let current = 0;
             const increment = target / 60;
+            const hasPercent = element.nextElementSibling && element.nextElementSibling.textContent.includes('%');
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
-                    element.textContent = target + (element.nextElementSibling.textContent.includes('%') ? '%' : '+');
+                    element.textContent = target + (hasPercent ? '%' : '+');
                     clearInterval(timer);
                 } else {
-                    element.textContent = Math.floor(current) + (element.nextElementSibling.textContent.includes('%') ? '%' : '+');
+                    element.textContent = Math.floor(current) + (hasPercent ? '%' : '+');
                 }
             }, 30);
         }
@@ -1912,6 +2211,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
+        let autoPlayTimer;
 
         function goToSlide(index) {
             if (index < 0) index = slides.length - 1;
@@ -1925,26 +2225,45 @@
             });
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
+                dot.setAttribute('aria-selected', i === currentSlide);
             });
         }
 
-        prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-        nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+        function startAutoPlay() {
+            autoPlayTimer = setInterval(() => goToSlide(currentSlide + 1), 6000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayTimer);
+        }
+
+        prevBtn.addEventListener('click', () => { stopAutoPlay(); goToSlide(currentSlide - 1); startAutoPlay(); });
+        nextBtn.addEventListener('click', () => { stopAutoPlay(); goToSlide(currentSlide + 1); startAutoPlay(); });
         dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => goToSlide(i));
+            dot.addEventListener('click', () => { stopAutoPlay(); goToSlide(i); startAutoPlay(); });
         });
 
-        // Auto-play
-        setInterval(() => goToSlide(currentSlide + 1), 6000);
+        startAutoPlay();
 
-        // ===== PARALLAX ORBS =====
+        // ===== PARALLAX ORBS (RAF throttled) =====
         const orbs = document.querySelectorAll('.floating-orb');
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
+        let orbScrollY = 0;
+        let orbTicking = false;
+
+        function updateOrbs() {
             orbs.forEach((orb, i) => {
                 const speed = 0.02 + (i * 0.01);
-                orb.style.transform = `translateY(${scrollY * speed}px)`;
+                orb.style.transform = `translateY(${orbScrollY * speed}px)`;
             });
+            orbTicking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            orbScrollY = window.scrollY;
+            if (!orbTicking) {
+                requestAnimationFrame(updateOrbs);
+                orbTicking = true;
+            }
         });
 
         // ===== SMOOTH SCROLL =====
@@ -1958,40 +2277,103 @@
             });
         });
 
-        // ===== HERO VIDEO SLOW ZOOM =====
-        const heroVideo = document.querySelector('.hero-video');
-        let zoomDirection = 1;
-        setInterval(() => {
-            zoomDirection *= -1;
-        }, 10000);
-
-        // ===== FORM SUBMIT =====
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('.contact-submit');
-            const originalText = btn.textContent;
-            btn.textContent = '已提交';
-            btn.style.background = 'var(--amber)';
-            btn.style.color = 'var(--warm-black)';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-                btn.style.color = '';
-                e.target.reset();
-            }, 3000);
+        // ===== PAGE VISIBILITY API (pause videos when tab hidden) =====
+        const videos = document.querySelectorAll('video');
+        document.addEventListener('visibilitychange', () => {
+            videos.forEach(video => {
+                if (document.hidden) {
+                    video.pause();
+                    video.setAttribute('paused', '');
+                } else {
+                    video.play();
+                    video.removeAttribute('paused');
+                }
+            });
         });
 
-        // ===== PLAY BUTTON PULSE =====
+        // ===== FORM SUBMIT (Formspree) =====
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = '提交中...';
+            formStatus.textContent = '';
+            formStatus.className = 'form-status';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = '预约提交成功！我们的顾问将在 24 小时内与您联系。';
+                    formStatus.classList.add('success');
+                    contactForm.reset();
+                    submitBtn.textContent = '已提交';
+                    submitBtn.style.background = 'var(--amber)';
+                    submitBtn.style.color = 'var(--warm-black)';
+                    setTimeout(() => {
+                        submitBtn.textContent = '提交预约';
+                        submitBtn.style.background = '';
+                        submitBtn.style.color = '';
+                        submitBtn.disabled = false;
+                        formStatus.textContent = '';
+                        formStatus.className = 'form-status';
+                    }, 5000);
+                } else {
+                    throw new Error('提交失败');
+                }
+            } catch (error) {
+                formStatus.textContent = '提交失败，请检查网络后重试，或直接拨打客服电话。';
+                formStatus.classList.add('error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '提交预约';
+            }
+        });
+
+        // ===== PLAY BUTTON =====
         const playBtn = document.getElementById('playBtn');
         playBtn.addEventListener('click', () => {
-            alert('视频播放功能将在完整版中呈现');
+            const video = document.querySelector('.craftsmanship-video');
+            if (video.paused) {
+                video.muted = false;
+                video.play();
+                playBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                playBtn.setAttribute('aria-label', '暂停视频');
+            } else {
+                video.pause();
+                playBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+                playBtn.setAttribute('aria-label', '播放视频');
+            }
         });
 
         // ===== PRODUCT BUTTONS =====
         document.querySelectorAll('.product-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                alert('产品详情页面即将上线');
+                const product = btn.dataset.product;
+                alert(`「${product}」详情页面即将上线，敬请期待！\n\n您也可以直接通过页面底部的表单预约私人品鉴。`);
             });
+        });
+
+        // ===== FOOTER SOCIAL LINKS =====
+        document.querySelectorAll('.footer-social a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = link.dataset.platform;
+                alert(`${platform} 官方账号即将开通，敬请期待！`);
+            });
+        });
+
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                toggleMobileMenu();
+            }
         });
     </script>
 </body>
