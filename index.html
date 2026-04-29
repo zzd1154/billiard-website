@@ -344,7 +344,7 @@
             justify-content: center;
         }
 
-        .hero-video-container {
+        .hero-slideshow {
             position: absolute;
             top: 0;
             left: 0;
@@ -354,9 +354,10 @@
             background: var(--warm-black);
             contain: strict;
             transform: translateZ(0);
+            overflow: hidden;
         }
 
-        .hero-video-container::before {
+        .hero-slideshow::before {
             content: '';
             position: absolute;
             top: 0;
@@ -373,7 +374,7 @@
             z-index: 2;
         }
 
-        .hero-video-container::after {
+        .hero-slideshow::after {
             content: '';
             position: absolute;
             top: 0;
@@ -384,26 +385,47 @@
             z-index: 2;
         }
 
-        .hero-video {
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            animation: kenBurnsFade 24s infinite;
+            will-change: transform, opacity;
+        }
+
+        .hero-slide:nth-child(1) { animation-delay: 0s; }
+        .hero-slide:nth-child(2) { animation-delay: 6s; }
+        .hero-slide:nth-child(3) { animation-delay: 12s; }
+        .hero-slide:nth-child(4) { animation-delay: 18s; }
+
+        .hero-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform: scale(1);
+            animation: kenBurnsZoom 24s infinite;
             will-change: transform;
-            contain: strict;
-            transform: translateZ(0);
         }
 
-        .hero-video.animate {
-            animation: heroZoom 20s ease-in-out infinite alternate;
+        .hero-slide:nth-child(1) img { animation-delay: 0s; }
+        .hero-slide:nth-child(2) img { animation-delay: 6s; }
+        .hero-slide:nth-child(3) img { animation-delay: 12s; }
+        .hero-slide:nth-child(4) img { animation-delay: 18s; }
+
+        @keyframes kenBurnsFade {
+            0% { opacity: 0; }
+            5% { opacity: 1; }
+            25% { opacity: 1; }
+            30% { opacity: 0; }
+            100% { opacity: 0; }
         }
 
-        .hero-video[paused] {
-            animation-play-state: paused;
-        }
-
-        @keyframes heroZoom {
+        @keyframes kenBurnsZoom {
             0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+            100% { transform: scale(1.12); }
         }
 
         .hero-content {
@@ -1668,7 +1690,7 @@
 
         /* ===== PRINT STYLES ===== */
         @media print {
-            .nav, .hero-video-container, .hero-scroll, .cursor, .cursor-dot,
+            .nav, .hero-slideshow, .hero-scroll, .cursor, .cursor-dot,
             .floating-orb, .mobile-menu-btn, .hero-cta, .craftsmanship-video,
             .testimonials-arrows, .testimonials-nav, .contact-submit,
             .craftsmanship-play, .loader {
@@ -1763,12 +1785,19 @@
     <main id="main-content">
     <!-- Hero Section -->
     <section class="hero" id="hero" aria-label="首屏">
-        <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline
-                poster="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1920&q=80"
-                aria-label="台球击打慢动作视频">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-person-hitting-a-pool-ball-42911-large.mp4" type="video/mp4">
-            </video>
+        <div class="hero-slideshow" aria-label="台球场景轮播">
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1920&q=80" alt="台球桌特写" loading="eager" decoding="async">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=1920&q=80" alt="台球静物" loading="eager" decoding="async">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=1920&q=80" alt="台球房场景" loading="eager" decoding="async">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1920&q=80" alt="台球杆与球" loading="eager" decoding="async">
+            </div>
         </div>
         <div class="hero-content">
             <p class="hero-subtitle">Est. 1987 &middot; Handcrafted Excellence</p>
@@ -2327,35 +2356,17 @@
             });
         });
 
-        // ===== VIDEO VISIBILITY CONTROL (pause when out of viewport or tab hidden) =====
-        const videos = document.querySelectorAll('video');
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    video.play().catch(() => {});
-                    if (video.classList.contains('hero-video')) {
-                        video.classList.add('animate');
-                    }
-                } else {
-                    video.pause();
-                    if (video.classList.contains('hero-video')) {
-                        video.classList.remove('animate');
-                    }
-                }
-            });
-        }, { threshold: 0.1 });
-
-        videos.forEach(video => videoObserver.observe(video));
-
+        // ===== PAGE VISIBILITY API (pause background tasks when tab hidden) =====
         document.addEventListener('visibilitychange', () => {
-            videos.forEach(video => {
-                if (document.hidden) {
-                    video.pause();
-                } else if (video.getBoundingClientRect().top < window.innerHeight) {
-                    video.play().catch(() => {});
-                }
-            });
+            if (document.hidden) {
+                document.querySelectorAll('.hero-slide, .hero-slide img').forEach(el => {
+                    el.style.animationPlayState = 'paused';
+                });
+            } else {
+                document.querySelectorAll('.hero-slide, .hero-slide img').forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }
         });
 
         // ===== FORM SUBMIT (Formspree) =====
