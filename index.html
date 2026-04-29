@@ -161,16 +161,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-            will-change: transform, background, padding;
+            transition: padding 0.6s cubic-bezier(0.76, 0, 0.24, 1), background 0.6s;
+            contain: layout style;
         }
 
         .nav.scrolled {
-            background: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.95);
             padding: 16px 60px;
-            border-bottom: 1px solid rgba(200, 149, 108, 0.1);
+            border-bottom: 1px solid rgba(200, 149, 108, 0.08);
         }
 
         .nav-logo {
@@ -278,8 +276,6 @@
             width: 100%;
             height: 100vh;
             background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             z-index: 1001;
             display: flex;
             flex-direction: column;
@@ -287,6 +283,7 @@
             justify-content: center;
             gap: 40px;
             transition: right 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            contain: layout style;
         }
 
         .mobile-menu.open {
@@ -339,6 +336,7 @@
             height: 100%;
             z-index: 1;
             background: var(--warm-black);
+            contain: strict;
         }
 
         .hero-video-container::before {
@@ -375,6 +373,7 @@
             object-fit: cover;
             animation: heroZoom 20s ease-in-out infinite alternate;
             will-change: transform;
+            contain: strict;
         }
 
         .hero-video[paused] {
@@ -529,6 +528,7 @@
         /* ===== SECTION COMMON ===== */
         section {
             position: relative;
+            contain: layout style paint;
         }
 
         .section-header {
@@ -563,6 +563,8 @@
             padding: 160px 60px;
             background: var(--warm-black);
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 800px;
         }
 
         .philosophy-grid {
@@ -583,9 +585,10 @@
             width: 100%;
             height: 600px;
             object-fit: cover;
-            filter: brightness(0.8) contrast(1.1);
+            filter: brightness(0.85);
             transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
             will-change: transform;
+            content-visibility: auto;
         }
 
         .philosophy-image:hover img {
@@ -667,6 +670,8 @@
         .collections {
             padding: 160px 60px;
             background: var(--deep-brown);
+            content-visibility: auto;
+            contain-intrinsic-size: 0 800px;
         }
 
         .collections-grid {
@@ -693,9 +698,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), filter 0.8s;
-            filter: brightness(0.75);
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+            filter: brightness(0.8);
             will-change: transform;
+            content-visibility: auto;
         }
 
         .collection-card:hover .collection-card-image img {
@@ -782,6 +788,8 @@
             background: var(--warm-black);
             position: relative;
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 600px;
         }
 
         .experience::before {
@@ -893,7 +901,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.5);
+            filter: brightness(0.55);
+            contain: strict;
         }
 
         .craftsmanship-overlay {
@@ -977,6 +986,8 @@
         .products {
             padding: 160px 60px;
             background: var(--warm-black);
+            content-visibility: auto;
+            contain-intrinsic-size: 0 1200px;
         }
 
         .products-container {
@@ -1034,6 +1045,7 @@
             object-fit: cover;
             transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
             will-change: transform;
+            content-visibility: auto;
         }
 
         .product-card:hover .product-image img {
@@ -1102,6 +1114,8 @@
             padding: 160px 60px;
             background: var(--deep-brown);
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 600px;
         }
 
         .testimonials-container {
@@ -1212,6 +1226,8 @@
             padding: 160px 60px;
             background: var(--warm-black);
             position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 700px;
         }
 
         .contact::before {
@@ -1567,14 +1583,13 @@
         .cursor {
             width: 20px;
             height: 20px;
-            border: 1px solid var(--amber);
+            border: 1px solid rgba(200, 149, 108, 0.6);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9998;
             transition: transform 0.15s, opacity 0.15s;
-            mix-blend-mode: difference;
-            will-change: transform, left, top;
+            will-change: transform;
         }
 
         .cursor-dot {
@@ -1586,12 +1601,12 @@
             pointer-events: none;
             z-index: 9998;
             transition: transform 0.08s;
-            will-change: transform, left, top;
+            will-change: transform;
         }
 
         .cursor.hover {
             transform: scale(2);
-            background: rgba(212, 165, 116, 0.1);
+            background: rgba(212, 165, 116, 0.15);
         }
 
         @media (pointer: coarse) {
@@ -1606,9 +1621,9 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
-            filter: blur(100px);
             opacity: 0.03;
             will-change: transform;
+            contain: strict;
         }
 
         .orb-1 {
@@ -2069,38 +2084,52 @@
             }, 1500);
         });
 
-        // ===== CUSTOM CURSOR =====
+        // ===== CUSTOM CURSOR (optimized: only runs when mouse moves) =====
         const cursor = document.getElementById('cursor');
         const cursorDot = document.getElementById('cursorDot');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
         let dotX = 0, dotY = 0;
+        let cursorRafId = null;
+        let cursorIdleTimer = null;
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.12;
+            cursorY += (mouseY - cursorY) * 0.12;
+            dotX += (mouseX - dotX) * 0.35;
+            dotY += (mouseY - dotY) * 0.35;
+
+            cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+            cursorDot.style.transform = `translate(${dotX - 2}px, ${dotY - 2}px)`;
+
+            cursorRafId = requestAnimationFrame(animateCursor);
+        }
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+            if (!cursorRafId) {
+                cursorRafId = requestAnimationFrame(animateCursor);
+            }
+            clearTimeout(cursorIdleTimer);
+            cursorIdleTimer = setTimeout(() => {
+                if (cursorRafId) {
+                    cancelAnimationFrame(cursorRafId);
+                    cursorRafId = null;
+                }
+            }, 100);
         });
 
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            dotX += (mouseX - dotX) * 0.3;
-            dotY += (mouseY - dotY) * 0.3;
-
-            cursor.style.left = cursorX - 10 + 'px';
-            cursor.style.top = cursorY - 10 + 'px';
-            cursorDot.style.left = dotX - 2 + 'px';
-            cursorDot.style.top = dotY - 2 + 'px';
-
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Hover effects for cursor
-        const hoverElements = document.querySelectorAll('a, button, .collection-card, .product-card, .testimonials-arrow, .testimonials-dot');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        // Hover effects for cursor (delegated for better perf)
+        document.body.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, .collection-card, .product-card, .testimonials-arrow, .testimonials-dot')) {
+                cursor.classList.add('hover');
+            }
+        });
+        document.body.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, .collection-card, .product-card, .testimonials-arrow, .testimonials-dot')) {
+                cursor.classList.remove('hover');
+            }
         });
 
         // ===== NAVIGATION SCROLL (RAF throttled) =====
@@ -2123,7 +2152,7 @@
                 requestAnimationFrame(updateNav);
                 ticking = true;
             }
-        });
+        }, { passive: true });
 
         // ===== MOBILE MENU =====
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -2245,26 +2274,23 @@
 
         startAutoPlay();
 
-        // ===== PARALLAX ORBS (RAF throttled) =====
+        // ===== PARALLAX ORBS (lightweight, only 2 orbs) =====
         const orbs = document.querySelectorAll('.floating-orb');
-        let orbScrollY = 0;
         let orbTicking = false;
 
         function updateOrbs() {
-            orbs.forEach((orb, i) => {
-                const speed = 0.02 + (i * 0.01);
-                orb.style.transform = `translateY(${orbScrollY * speed}px)`;
-            });
+            const y = window.scrollY;
+            orbs[0] && (orbs[0].style.transform = `translateY(${y * 0.02}px)`);
+            orbs[1] && (orbs[1].style.transform = `translateY(${y * 0.03}px)`);
             orbTicking = false;
         }
 
         window.addEventListener('scroll', () => {
-            orbScrollY = window.scrollY;
             if (!orbTicking) {
                 requestAnimationFrame(updateOrbs);
                 orbTicking = true;
             }
-        });
+        }, { passive: true });
 
         // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
