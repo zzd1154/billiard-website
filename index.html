@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTISAN BILLIARDS | 匠造台球</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --warm-black: #0a0a0a;
+            --deep-brown: #1a1208;
+            --amber: #c8956c;
+            --gold: #d4a574;
+            --cream: #f5ede4;
+            --light-warm: #faf6f1;
+            --accent-orange: #e07b39;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Serif SC', sans-serif;
+            background: var(--warm-black);
+            color: var(--cream);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== LOADER ===== */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--warm-black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s cubic-bezier(0.76, 0, 0.24, 1), visibility 1.2s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            letter-spacing: 8px;
+            color: var(--gold);
+            margin-bottom: 30px;
+            animation: loaderPulse 2s ease-in-out infinite;
+        }
+
+        .loader-line {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+            margin: 0 auto;
+            animation: loaderExpand 2s ease-in-out infinite;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes loaderExpand {
+            0%, 100% { transform: scaleX(0.5); opacity: 0.3; }
+            50% { transform: scaleX(1); opacity: 1; }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 24px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(20px);
+            padding: 16px 60px;
+            border-bottom: 1px solid rgba(200, 149, 108, 0.1);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--cream);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--amber);
+            transition: width 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .nav-logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.4s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--amber);
+            transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.3) 0%,
+                rgba(10, 10, 10, 0.1) 40%,
+                rgba(10, 10, 10, 0.4) 70%,
+                rgba(10, 10, 10, 0.95) 100%
+            );
+            z-index: 2;
+        }
+
+        .hero-video-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 10, 0.4) 100%);
+            z-index: 2;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 0.5s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--cream);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.2s 0.8s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: rgba(245, 237, 228, 0.7);
+            max-width: 500px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 1.1s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 48px;
+            border: 1px solid rgba(212, 165, 116, 0.4);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s 1.4s forwards;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.15), transparent);
+            transition: left 0.8s;
+        }
+
+        .hero-cta:hover {
+            border-color: var(--amber);
+            color: var(--cream);
+            letter-spacing: 4px;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta svg {
+            transition: transform 0.4s;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(6px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeIn 1s 2s forwards;
+        }
+
+        .hero-scroll-text {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(245, 237, 228, 0.5);
+        }
+
+        .hero-scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--amber), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(1); opacity: 0.5; }
+            50% { transform: scaleY(0.6); opacity: 1; }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* ===== SECTION COMMON ===== */
+        section {
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--cream);
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        /* ===== PHILOSOPHY SECTION ===== */
+        .philosophy {
+            padding: 160px 60px;
+            background: var(--warm-black);
+            overflow: hidden;
+        }
+
+        .philosophy-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .philosophy-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            filter: brightness(0.8) contrast(1.1);
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .philosophy-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .philosophy-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .philosophy-content {
+            padding: 40px 0;
+        }
+
+        .philosophy-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            font-weight: 400;
+            color: rgba(212, 165, 116, 0.08);
+            line-height: 1;
+            margin-bottom: -40px;
+        }
+
+        .philosophy-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .philosophy-text {
+            font-size: 15px;
+            color: rgba(245, 237, 228, 0.65);
+            line-height: 2;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .philosophy-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 8px;
+            transition: color 0.4s;
+        }
+
+        .philosophy-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 1px;
+            background: var(--amber);
+            transition: width 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .philosophy-link:hover {
+            color: var(--cream);
+        }
+
+        .philosophy-link:hover::after {
+            width: 100%;
+        }
+
+        /* ===== COLLECTIONS SECTION ===== */
+        .collections {
+            padding: 160px 60px;
+            background: var(--deep-brown);
+        }
+
+        .collections-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .collection-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            group: true;
+        }
+
+        .collection-card-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+
+        .collection-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), filter 0.8s;
+            filter: brightness(0.75);
+        }
+
+        .collection-card:hover .collection-card-image img {
+            transform: scale(1.08);
+            filter: brightness(0.9);
+        }
+
+        .collection-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 60%);
+            transition: background 0.6s;
+        }
+
+        .collection-card:hover .collection-card-overlay {
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.7) 0%, transparent 50%);
+        }
+
+        .collection-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            z-index: 2;
+        }
+
+        .collection-card-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s 0.1s;
+        }
+
+        .collection-card:hover .collection-card-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .collection-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--cream);
+        }
+
+        .collection-card-desc {
+            font-size: 13px;
+            color: rgba(245, 237, 228, 0.6);
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s 0.15s;
+        }
+
+        .collection-card:hover .collection-card-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .collection-card-line {
+            width: 0;
+            height: 1px;
+            background: var(--amber);
+            margin-top: 20px;
+            transition: width 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .collection-card:hover .collection-card-line {
+            width: 60px;
+        }
+
+        /* ===== EXPERIENCE SECTION ===== */
+        .experience {
+            padding: 160px 60px;
+            background: var(--warm-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .experience-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+            margin-top: 100px;
+        }
+
+        .experience-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .experience-item:nth-child(1) { transition-delay: 0s; }
+        .experience-item:nth-child(2) { transition-delay: 0.1s; }
+        .experience-item:nth-child(3) { transition-delay: 0.2s; }
+        .experience-item:nth-child(4) { transition-delay: 0.3s; }
+
+        .experience-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            position: relative;
+        }
+
+        .experience-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            transition: all 0.6s;
+        }
+
+        .experience-item:hover .experience-icon {
+            border-color: var(--amber);
+            transform: scale(1.1);
+        }
+
+        .experience-item:hover .experience-icon::before {
+            border-color: rgba(212, 165, 116, 0.3);
+            transform: scale(1.3);
+            opacity: 0;
+            transition: all 0.8s;
+        }
+
+        .experience-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .experience-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--amber);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .experience-label {
+            font-size: 14px;
+            color: rgba(245, 237, 228, 0.7);
+            letter-spacing: 1px;
+        }
+
+        /* ===== CRAFTSMANSHIP VIDEO SECTION ===== */
+        .craftsmanship {
+            position: relative;
+            height: 80vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .craftsmanship-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .craftsmanship-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.4);
+            z-index: 2;
+        }
+
+        .craftsmanship-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+
+        .craftsmanship-play {
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgba(212, 165, 116, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 50px;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            position: relative;
+        }
+
+        .craftsmanship-play::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid var(--amber);
+            opacity: 0;
+            transform: scale(1.2);
+            transition: all 0.8s;
+        }
+
+        .craftsmanship-play:hover {
+            background: rgba(212, 165, 116, 0.1);
+            transform: scale(1.1);
+        }
+
+        .craftsmanship-play:hover::before {
+            opacity: 0.3;
+            transform: scale(1.5);
+        }
+
+        .craftsmanship-play svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cream);
+            margin-left: 4px;
+        }
+
+        .craftsmanship-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: var(--cream);
+        }
+
+        .craftsmanship-text {
+            font-size: 15px;
+            color: rgba(245, 237, 228, 0.65);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* ===== PRODUCTS SECTION ===== */
+        .products {
+            padding: 160px 60px;
+            background: var(--warm-black);
+        }
+
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+        }
+
+        .product-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px;
+            border: 1px solid rgba(212, 165, 116, 0.08);
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.03), transparent);
+            transition: left 1s;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            border-color: rgba(212, 165, 116, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 20px 0;
+        }
+
+        .product-category {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 16px;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: var(--cream);
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: rgba(245, 237, 228, 0.55);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .product-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: transparent;
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            color: var(--gold);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.5s;
+            font-family: inherit;
+        }
+
+        .product-btn:hover {
+            background: var(--amber);
+            border-color: var(--amber);
+            color: var(--warm-black);
+        }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .testimonials {
+            padding: 160px 60px;
+            background: var(--deep-brown);
+            overflow: hidden;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonials-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 100px;
+            text-align: center;
+            opacity: 0.3;
+            transition: opacity 0.6s;
+        }
+
+        .testimonial-slide.active {
+            opacity: 1;
+        }
+
+        .testimonial-quote {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--cream);
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+        }
+
+        .testimonial-role {
+            font-size: 13px;
+            color: rgba(245, 237, 228, 0.5);
+            margin-top: 8px;
+        }
+
+        .testimonials-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 60px;
+        }
+
+        .testimonials-dot {
+            width: 40px;
+            height: 2px;
+            background: rgba(212, 165, 116, 0.2);
+            cursor: pointer;
+            transition: all 0.4s;
+            border: none;
+        }
+
+        .testimonials-dot.active {
+            background: var(--amber);
+            width: 60px;
+        }
+
+        .testimonials-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .testimonials-arrow {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            pointer-events: all;
+            font-size: 18px;
+        }
+
+        .testimonials-arrow:hover {
+            border-color: var(--amber);
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact {
+            padding: 160px 60px;
+            background: var(--warm-black);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.2), transparent);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: var(--cream);
+        }
+
+        .contact-text {
+            font-size: 16px;
+            color: rgba(245, 237, 228, 0.6);
+            margin-bottom: 60px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .contact-form-group {
+            position: relative;
+        }
+
+        .contact-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .contact-form-group input,
+        .contact-form-group textarea {
+            width: 100%;
+            padding: 20px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+            color: var(--cream);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.4s;
+        }
+
+        .contact-form-group input:focus,
+        .contact-form-group textarea:focus {
+            border-color: var(--amber);
+        }
+
+        .contact-form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form-group label {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            font-size: 14px;
+            color: rgba(245, 237, 228, 0.4);
+            pointer-events: none;
+            transition: all 0.4s;
+        }
+
+        .contact-form-group input:focus + label,
+        .contact-form-group input:not(:placeholder-shown) + label,
+        .contact-form-group textarea:focus + label,
+        .contact-form-group textarea:not(:placeholder-shown) + label {
+            top: -8px;
+            font-size: 11px;
+            color: var(--amber);
+            letter-spacing: 1px;
+        }
+
+        .contact-submit {
+            grid-column: 1 / -1;
+            justify-self: center;
+            margin-top: 20px;
+            padding: 20px 60px;
+            background: transparent;
+            border: 1px solid var(--amber);
+            color: var(--gold);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--amber);
+            transition: left 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            z-index: -1;
+        }
+
+        .contact-submit:hover {
+            color: var(--warm-black);
+        }
+
+        .contact-submit:hover::before {
+            left: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 80px 60px 40px;
+            background: var(--warm-black);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .footer-desc {
+            font-size: 13px;
+            color: rgba(245, 237, 228, 0.5);
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .footer-title {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            color: rgba(245, 237, 228, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.4s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: rgba(245, 237, 228, 0.3);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-social a {
+            color: rgba(245, 237, 228, 0.5);
+            transition: color 0.4s;
+        }
+
+        .footer-social a:hover {
+            color: var(--amber);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 24px;
+            height: 1px;
+            background: var(--cream);
+            transition: all 0.4s;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .philosophy-image img {
+                height: 400px;
+            }
+
+            .collections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .experience-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 20px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .philosophy,
+            .collections,
+            .experience,
+            .products,
+            .testimonials,
+            .contact {
+                padding: 100px 24px;
+            }
+
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .product-card {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .testimonial-slide {
+                padding: 0 40px;
+            }
+
+            .philosophy-number {
+                font-size: 80px;
+            }
+        }
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--amber);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.15s, opacity 0.15s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--amber);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.08s;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        @media (pointer: coarse) {
+            .cursor, .cursor-dot {
+                display: none;
+            }
+        }
+
+        /* ===== PARALLAX FLOATING ELEMENTS ===== */
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(100px);
+            opacity: 0.03;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--amber);
+            top: 10%;
+            right: -10%;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-orange);
+            bottom: 20%;
+            left: -5%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-text">ARTISAN BILLIARDS</div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Floating Orbs -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">ARTISAN</a>
+        <ul class="nav-links">
+            <li><a href="#philosophy">品牌理念</a></li>
+            <li><a href="#collections">系列作品</a></li>
+            <li><a href="#craftsmanship">匠心工艺</a></li>
+            <li><a href="#products">甄选产品</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-video-container">
+            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1920&q=80">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-person-hitting-a-pool-ball-42911-large.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Est. 1987 &middot; Handcrafted Excellence</p>
+            <h1 class="hero-title">每一击<br>皆是<em>艺术</em></h1>
+            <p class="hero-desc">三十七年来，我们始终相信：台球桌不仅是竞技的舞台，更是匠人精神与美学追求的完美融合</p>
+            <a href="#collections" class="hero-cta">
+                探索系列
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="hero-scroll">
+            <span class="hero-scroll-text">Scroll</span>
+            <div class="hero-scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-grid">
+            <div class="philosophy-image reveal">
+                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&q=80" alt="台球工艺">
+            </div>
+            <div class="philosophy-content">
+                <div class="philosophy-number reveal">01</div>
+                <h2 class="philosophy-title reveal reveal-delay-1">传承百年的<br>手工技艺</h2>
+                <p class="philosophy-text reveal reveal-delay-2">
+                    每一块石板都经过三个月的自然风干，每一根台呢都由经验超过二十年的老师傅手工铺装。
+                    我们不追求产量，只执着于每一毫米的完美。这是 Artisan 的信仰，也是我们对每一位玩家的承诺。
+                    从选材到成品，需要经过 127 道工序，历时 6 个月方能完成一张真正意义上的顶级球台。
+                </p>
+                <a href="#" class="philosophy-link reveal reveal-delay-3">了解工艺</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="collections" id="collections">
+        <div class="section-header">
+            <span class="section-label reveal">Collections</span>
+            <h2 class="section-title reveal reveal-delay-1">典藏<em>系列</em></h2>
+        </div>
+        <div class="collections-grid">
+            <div class="collection-card reveal">
+                <div class="collection-card-image">
+                    <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=600&q=80" alt="大师系列">
+                    <div class="collection-card-overlay"></div>
+                </div>
+                <div class="collection-card-content">
+                    <div class="collection-card-label">Master Series</div>
+                    <h3 class="collection-card-title">大师系列</h3>
+                    <p class="collection-card-desc">为专业赛事而生，选用意大利进口火山岩石板</p>
+                    <div class="collection-card-line"></div>
+                </div>
+            </div>
+            <div class="collection-card reveal reveal-delay-1">
+                <div class="collection-card-image">
+                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="典藏系列">
+                    <div class="collection-card-overlay"></div>
+                </div>
+                <div class="collection-card-content">
+                    <div class="collection-card-label">Heritage Series</div>
+                    <h3 class="collection-card-title">典藏系列</h3>
+                    <p class="collection-card-desc">复古设计与现代工艺的完美融合</p>
+                    <div class="collection-card-line"></div>
+                </div>
+            </div>
+            <div class="collection-card reveal reveal-delay-2">
+                <div class="collection-card-image">
+                    <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="限量系列">
+                    <div class="collection-card-overlay"></div>
+                </div>
+                <div class="collection-card-content">
+                    <div class="collection-card-label">Limited Edition</div>
+                    <h3 class="collection-card-title">限量系列</h3>
+                    <p class="collection-card-desc">全球限量 50 台，每一台都有独立编号</p>
+                    <div class="collection-card-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="experience-container">
+            <div class="section-header">
+                <span class="section-label reveal">Experience</span>
+                <h2 class="section-title reveal reveal-delay-1">沉浸<em>体验</em></h2>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-item reveal">
+                    <div class="experience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="experience-number" data-count="37">0</div>
+                    <div class="experience-label">年历史传承</div>
+                </div>
+                <div class="experience-item reveal reveal-delay-1">
+                    <div class="experience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="experience-number" data-count="127">0</div>
+                    <div class="experience-label">道制作工序</div>
+                </div>
+                <div class="experience-item reveal reveal-delay-2">
+                    <div class="experience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <div class="experience-number" data-count="98">0</div>
+                    <div class="experience-label">%客户满意度</div>
+                </div>
+                <div class="experience-item reveal reveal-delay-3">
+                    <div class="experience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="experience-number" data-count="42">0</div>
+                    <div class="experience-label">个国家与地区</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Craftsmanship Video Section -->
+    <section class="craftsmanship" id="craftsmanship">
+        <video class="craftsmanship-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=1920&q=80">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-hitting-a-pool-ball-42910-large.mp4" type="video/mp4">
+        </video>
+        <div class="craftsmanship-overlay"></div>
+        <div class="craftsmanship-content">
+            <div class="craftsmanship-play" id="playBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+            <h2 class="craftsmanship-title">匠心工艺</h2>
+            <p class="craftsmanship-text">观看我们如何用双手赋予木材生命，打造世界级的台球体验</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="products-container">
+            <div class="section-header">
+                <span class="section-label reveal">Products</span>
+                <h2 class="section-title reveal reveal-delay-1">甄选<em>臻品</em></h2>
+            </div>
+            <div class="products-grid">
+                <div class="product-card reveal">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35?w=600&q=80" alt="黑檀大师台">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Master Series</div>
+                        <h3 class="product-name">黑檀大师台</h3>
+                        <p class="product-desc">采用非洲黑檀实木框架，配以爱尔兰进口台呢，专为顶级赛事设计</p>
+                        <div class="product-price">¥ 168,000</div>
+                        <button class="product-btn">了解详情</button>
+                    </div>
+                </div>
+                <div class="product-card reveal reveal-delay-1">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="胡桃木典藏台">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Heritage Series</div>
+                        <h3 class="product-name">胡桃木典藏台</h3>
+                        <p class="product-desc">北美黑胡桃木打造，复古铜件装饰，致敬黄金时代的优雅</p>
+                        <div class="product-price">¥ 98,000</div>
+                        <button class="product-btn">了解详情</button>
+                    </div>
+                </div>
+                <div class="product-card reveal reveal-delay-2">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=600&q=80" alt="碳纤维竞技台">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Pro Series</div>
+                        <h3 class="product-name">碳纤维竞技台</h3>
+                        <p class="product-desc">航天级碳纤维结构，极致平整度，为职业选手而生</p>
+                        <div class="product-price">¥ 128,000</div>
+                        <button class="product-btn">了解详情</button>
+                    </div>
+                </div>
+                <div class="product-card reveal reveal-delay-3">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="限量版金箔台">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Limited Edition</div>
+                        <h3 class="product-name">限量版金箔台</h3>
+                        <p class="product-desc">24K金箔手工贴饰，全球限量 50 台，附收藏证书</p>
+                        <div class="product-price">¥ 388,000</div>
+                        <button class="product-btn">了解详情</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <span class="section-label reveal">Testimonials</span>
+                <h2 class="section-title reveal reveal-delay-1">玩家<em>心声</em></h2>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-slide active">
+                        <p class="testimonial-quote">"在 Artisan 的球台上打球是一种修行。每一次击球，你都能感受到匠人的温度——那种对完美的执着，让比赛超越了胜负本身。"</p>
+                        <div class="testimonial-author">丁俊晖</div>
+                        <div class="testimonial-role">斯诺克大师赛冠军</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <p class="testimonial-quote">"我拥有过许多球台，但 Artisan 的典藏系列让我找到了真正的心之所向。它不仅是一件竞技器材，更是一件值得传承的艺术品。"</p>
+                        <div class="testimonial-author">Robert Smith</div>
+                        <div class="testimonial-role">美国九球公开赛冠军</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <p class="testimonial-quote">"作为一家高端私人会所，我们选择了 Artisan 的大师系列。三年过去了，每一张球台依然如新，这就是真正匠心品质的最好证明。"</p>
+                        <div class="testimonial-author">陈明远</div>
+                        <div class="testimonial-role">璞瑄会所 创始人</div>
+                    </div>
+                </div>
+                <div class="testimonials-arrows">
+                    <button class="testimonials-arrow" id="prevBtn">&#8249;</button>
+                    <button class="testimonials-arrow" id="nextBtn">&#8250;</button>
+                </div>
+            </div>
+            <div class="testimonials-nav" id="testimonialsNav">
+                <button class="testimonials-dot active"></button>
+                <button class="testimonials-dot"></button>
+                <button class="testimonials-dot"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2 class="contact-title reveal">开启您的<br>专属体验</h2>
+            <p class="contact-text reveal reveal-delay-1">预约私人品鉴，让我们的顾问为您量身推荐最合适的球台</p>
+            <form class="contact-form reveal reveal-delay-2">
+                <div class="contact-form-group">
+                    <input type="text" placeholder=" " required>
+                    <label>您的姓名</label>
+                </div>
+                <div class="contact-form-group">
+                    <input type="tel" placeholder=" " required>
+                    <label>联系电话</label>
+                </div>
+                <div class="contact-form-group">
+                    <input type="email" placeholder=" ">
+                    <label>电子邮箱</label>
+                </div>
+                <div class="contact-form-group">
+                    <input type="text" placeholder=" ">
+                    <label>所在城市</label>
+                </div>
+                <div class="contact-form-group full">
+                    <textarea placeholder=" "></textarea>
+                    <label>留言内容</label>
+                </div>
+                <button type="submit" class="contact-submit">提交预约</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-brand">ARTISAN</div>
+                    <p class="footer-desc">自 1987 年起，我们致力于为全球台球爱好者打造最顶级的竞技体验。每一张球台，都是一件值得传承的艺术品。</p>
+                </div>
+                <div>
+                    <div class="footer-title">产品系列</div>
+                    <ul class="footer-links">
+                        <li><a href="#">大师系列</a></li>
+                        <li><a href="#">典藏系列</a></li>
+                        <li><a href="#">限量系列</a></li>
+                        <li><a href="#">配件周边</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-title">关于我们</div>
+                    <ul class="footer-links">
+                        <li><a href="#">品牌故事</a></li>
+                        <li><a href="#">匠心工艺</a></li>
+                        <li><a href="#">新闻动态</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-title">客户服务</div>
+                    <ul class="footer-links">
+                        <li><a href="#">预约品鉴</a></li>
+                        <li><a href="#">售后保障</a></li>
+                        <li><a href="#">门店查询</a></li>
+                        <li><a href="#">联系客服</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">&copy; 2024 Artisan Billiards. All rights reserved.</div>
+                <div class="footer-social">
+                    <a href="#">WeChat</a>
+                    <a href="#">Weibo</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== LOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // ===== CUSTOM CURSOR =====
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            dotX += (mouseX - dotX) * 0.3;
+            dotY += (mouseY - dotY) * 0.3;
+
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            cursorDot.style.left = dotX - 2 + 'px';
+            cursorDot.style.top = dotY - 2 + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effects for cursor
+        const hoverElements = document.querySelectorAll('a, button, .collection-card, .product-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // ===== NAVIGATION SCROLL =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== COUNTER ANIMATION =====
+        const counters = document.querySelectorAll('.experience-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.count);
+                    animateCounter(entry.target, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.nextElementSibling.textContent.includes('%') ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.nextElementSibling.textContent.includes('%') ? '%' : '+');
+                }
+            }, 30);
+        }
+
+        // ===== TESTIMONIALS SLIDER =====
+        const track = document.getElementById('testimonialsTrack');
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.testimonials-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function goToSlide(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            currentSlide = index;
+
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => goToSlide(i));
+        });
+
+        // Auto-play
+        setInterval(() => goToSlide(currentSlide + 1), 6000);
+
+        // ===== PARALLAX ORBS =====
+        const orbs = document.querySelectorAll('.floating-orb');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            orbs.forEach((orb, i) => {
+                const speed = 0.02 + (i * 0.01);
+                orb.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== HERO VIDEO SLOW ZOOM =====
+        const heroVideo = document.querySelector('.hero-video');
+        let zoomDirection = 1;
+        setInterval(() => {
+            zoomDirection *= -1;
+        }, 10000);
+
+        // ===== FORM SUBMIT =====
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('.contact-submit');
+            const originalText = btn.textContent;
+            btn.textContent = '已提交';
+            btn.style.background = 'var(--amber)';
+            btn.style.color = 'var(--warm-black)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+                e.target.reset();
+            }, 3000);
+        });
+
+        // ===== PLAY BUTTON PULSE =====
+        const playBtn = document.getElementById('playBtn');
+        playBtn.addEventListener('click', () => {
+            alert('视频播放功能将在完整版中呈现');
+        });
+
+        // ===== PRODUCT BUTTONS =====
+        document.querySelectorAll('.product-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('产品详情页面即将上线');
+            });
+        });
+    </script>
+</body>
+</html>
