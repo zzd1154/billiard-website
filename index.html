@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://zzd1154.github.io/billiard-website/">
     <meta property="og:title" content="ARTISAN BILLIARDS | 匠造台球 — 高端手工台球品牌">
     <meta property="og:description" content="创立于1987年，专注于高端手工台球桌的打造。每一张球台历经127道工序、6个月精心制作。">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1200&q=80">
+    <meta property="og:image" content="https://raw.githubusercontent.com/zzd1154/billiard-website/main/images/hero-1.jpg">
     <meta property="og:locale" content="zh_CN">
 
     <!-- Twitter -->
@@ -24,7 +24,7 @@
     <meta property="twitter:url" content="https://zzd1154.github.io/billiard-website/">
     <meta property="twitter:title" content="ARTISAN BILLIARDS | 匠造台球">
     <meta property="twitter:description" content="创立于1987年，专注于高端手工台球桌的打造。">
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=1200&q=80">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/zzd1154/billiard-website/main/images/hero-1.jpg">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://zzd1154.github.io/billiard-website/">
@@ -32,7 +32,7 @@
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://images.unsplash.com">
+    <!-- External images removed, all visuals are now code-generated -->
     <link rel="preconnect" href="https://assets.mixkit.co">
     <link rel="dns-prefetch" href="https://formspree.io">
 
@@ -593,29 +593,82 @@
             transform: translateZ(0);
         }
 
-        .philosophy-image img {
+        .philosophy-visual {
+            position: relative;
             width: 100%;
             height: 600px;
-            object-fit: cover;
-            filter: brightness(0.85);
-            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
-            will-change: transform;
-            content-visibility: auto;
+            background: linear-gradient(135deg, #1a3a2a 0%, #0f1f15 50%, #0a0a0a 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .philosophy-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .philosophy-image::after {
+        .philosophy-visual::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, transparent 60%);
-            pointer-events: none;
+            top: 10%;
+            left: 10%;
+            right: 10%;
+            bottom: 10%;
+            border: 1px solid rgba(212, 165, 116, 0.15);
+        }
+
+        .philosophy-visual::after {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 12%;
+            right: 12%;
+            bottom: 12%;
+            border: 1px solid rgba(212, 165, 116, 0.08);
+        }
+
+        .philosophy-cue {
+            position: absolute;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8b6914, #d4a574, #8b6914, transparent);
+            transform: rotate(-25deg);
+            opacity: 0.6;
+        }
+
+        .philosophy-ball {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ff6b7a, #c41e3a, #4a0000);
+            box-shadow: 0 8px 32px rgba(196, 30, 58, 0.3), inset -4px -4px 12px rgba(0,0,0,0.4);
+        }
+
+        .philosophy-ball::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 25%;
+            height: 25%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .philosophy-ball:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 35% 35%, #fff4a3, #ffd700, #665500);
+            box-shadow: 0 6px 24px rgba(255, 215, 0, 0.25);
+            top: 55%;
+            left: 60%;
+        }
+
+        .philosophy-ball:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 35% 35%, #5a8fd8, #1e3a8a, #0a1525);
+            box-shadow: 0 5px 20px rgba(30, 58, 138, 0.25);
+            top: 30%;
+            right: 15%;
         }
 
         .philosophy-content {
@@ -907,15 +960,32 @@
             justify-content: center;
         }
 
-        .craftsmanship-video {
+        .craftsmanship-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            filter: brightness(0.55);
+            background: linear-gradient(180deg, #0f1f15 0%, #1a1208 50%, #0a0a0a 100%);
             contain: strict;
+        }
+
+        .craftsmanship-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 40px;
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            transition: all 0.6s;
+        }
+
+        .craftsmanship-content:hover .craftsmanship-icon {
+            border-color: var(--amber);
+            transform: scale(1.1);
         }
 
         .craftsmanship-overlay {
@@ -1053,17 +1123,57 @@
             transform: translateZ(0);
         }
 
-        .product-image img {
+        .product-visual {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
             transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
-            will-change: transform;
-            content-visibility: auto;
         }
 
-        .product-card:hover .product-image img {
-            transform: scale(1.08);
+        .product-card:hover .product-visual {
+            transform: scale(1.05);
+        }
+
+        .product-visual::before {
+            content: '';
+            width: 70%;
+            height: 70%;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .product-visual.master::before {
+            background: radial-gradient(circle at 35% 35%, #5a8fd8, #1e3a8a, #0a1525);
+            box-shadow: 0 12px 48px rgba(30, 58, 138, 0.3), inset -6px -6px 16px rgba(0,0,0,0.4);
+        }
+
+        .product-visual.heritage::before {
+            background: radial-gradient(circle at 35% 35%, #d4a574, #8b6914, #3d2b0a);
+            box-shadow: 0 12px 48px rgba(212, 165, 116, 0.25), inset -6px -6px 16px rgba(0,0,0,0.4);
+        }
+
+        .product-visual.pro::before {
+            background: radial-gradient(circle at 35% 35%, #64748b, #1e293b, #0f172a);
+            box-shadow: 0 12px 48px rgba(100, 116, 139, 0.3), inset -6px -6px 16px rgba(0,0,0,0.4);
+        }
+
+        .product-visual.limited::before {
+            background: radial-gradient(circle at 35% 35%, #ffd700, #b8860b, #4a3a00);
+            box-shadow: 0 12px 48px rgba(255, 215, 0, 0.3), inset -6px -6px 16px rgba(0,0,0,0.4);
+        }
+
+        .product-visual::after {
+            content: '';
+            position: absolute;
+            top: 28%;
+            left: 32%;
+            width: 18%;
+            height: 18%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
         }
 
         .product-info {
@@ -1776,8 +1886,11 @@
     <!-- Philosophy Section -->
     <section class="philosophy" id="philosophy" aria-label="品牌理念">
         <div class="philosophy-grid">
-            <div class="philosophy-image reveal">
-                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=800&q=80" alt="台球匠人手工打磨台球桌石板的特写画面" loading="lazy">
+            <div class="philosophy-visual reveal">
+                <div class="philosophy-cue"></div>
+                <div class="philosophy-ball" style="top: 25%; left: 20%;"></div>
+                <div class="philosophy-ball"></div>
+                <div class="philosophy-ball"></div>
             </div>
             <div class="philosophy-content">
                 <div class="philosophy-number reveal" aria-hidden="true">01</div>
@@ -1801,7 +1914,9 @@
         <div class="collections-grid">
             <div class="collection-card reveal">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1606166325683-e6deb697d301?w=600&q=80" alt="大师系列台球桌，深色实木框架搭配绿色台呢" loading="lazy">
+                    <div class="collection-card-visual">
+                        <div class="collection-card-ball master"></div>
+                    </div>
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1813,7 +1928,9 @@
             </div>
             <div class="collection-card reveal reveal-delay-1">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="典藏系列台球桌，复古风格设计" loading="lazy">
+                    <div class="collection-card-visual">
+                        <div class="collection-card-ball heritage"></div>
+                    </div>
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1825,7 +1942,9 @@
             </div>
             <div class="collection-card reveal reveal-delay-2">
                 <div class="collection-card-image">
-                    <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="限量系列台球桌，奢华定制设计" loading="lazy">
+                    <div class="collection-card-visual">
+                        <div class="collection-card-ball limited"></div>
+                    </div>
                     <div class="collection-card-overlay"></div>
                 </div>
                 <div class="collection-card-content">
@@ -1890,20 +2009,18 @@
 
     <!-- Craftsmanship Video Section -->
     <section class="craftsmanship" id="craftsmanship" aria-label="匠心工艺">
-        <video class="craftsmanship-video" autoplay muted loop playsinline
-            poster="https://images.unsplash.com/photo-1534158914592-062992fbe900?w=1920&q=80"
-            aria-label="匠人手工制作台球桌工艺视频">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-hitting-a-pool-ball-42910-large.mp4" type="video/mp4">
-        </video>
+        <div class="craftsmanship-bg"></div>
         <div class="craftsmanship-overlay"></div>
         <div class="craftsmanship-content">
-            <button class="craftsmanship-play" id="playBtn" aria-label="播放工艺视频">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8 5v14l11-7z"/>
+            <div class="craftsmanship-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                    <path d="M2 12h2M20 12h2M12 2v2M12 20v2"/>
                 </svg>
-            </button>
+            </div>
             <h2 class="craftsmanship-title">匠心工艺</h2>
-            <p class="craftsmanship-text">观看我们如何用双手赋予木材生命，打造世界级的台球体验</p>
+            <p class="craftsmanship-text">每一张球台历经 127 道工序，6 个月精心打磨。从选材到成品，匠人用双手赋予木材生命。</p>
         </div>
     </section>
 
@@ -1917,7 +2034,7 @@
             <div class="products-grid">
                 <div class="product-card reveal">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35?w=600&q=80" alt="黑檀大师台，非洲黑檀实木框架台球桌" loading="lazy">
+                        <div class="product-visual master"></div>
                     </div>
                     <div class="product-info">
                         <div class="product-category">Master Series</div>
@@ -1929,7 +2046,7 @@
                 </div>
                 <div class="product-card reveal reveal-delay-1">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=80" alt="胡桃木典藏台，北美黑胡桃木复古台球桌" loading="lazy">
+                        <div class="product-visual heritage"></div>
                     </div>
                     <div class="product-info">
                         <div class="product-category">Heritage Series</div>
@@ -1941,7 +2058,7 @@
                 </div>
                 <div class="product-card reveal reveal-delay-2">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1575425186775-b8de9a427e67?w=600&q=80" alt="碳纤维竞技台，现代简约风格" loading="lazy">
+                        <div class="product-visual pro"></div>
                     </div>
                     <div class="product-info">
                         <div class="product-category">Pro Series</div>
@@ -1953,7 +2070,7 @@
                 </div>
                 <div class="product-card reveal reveal-delay-3">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&q=80" alt="限量版金箔台，奢华金箔装饰台球桌" loading="lazy">
+                        <div class="product-visual limited"></div>
                     </div>
                     <div class="product-info">
                         <div class="product-category">Limited Edition</div>
@@ -2609,21 +2726,16 @@
             }
         });
 
-        // ===== PLAY BUTTON =====
-        const playBtn = document.getElementById('playBtn');
-        playBtn.addEventListener('click', () => {
-            const video = document.querySelector('.craftsmanship-video');
-            if (video.paused) {
-                video.muted = false;
-                video.play();
-                playBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-                playBtn.setAttribute('aria-label', '暂停视频');
-            } else {
-                video.pause();
-                playBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
-                playBtn.setAttribute('aria-label', '播放视频');
-            }
-        });
+        // ===== CRAFTSMANSHIP ICON HOVER =====
+        const craftsmanshipSection = document.getElementById('craftsmanship');
+        if (craftsmanshipSection) {
+            craftsmanshipSection.addEventListener('mouseenter', () => {
+                craftsmanshipSection.querySelector('.craftsmanship-icon')?.classList.add('hover');
+            });
+            craftsmanshipSection.addEventListener('mouseleave', () => {
+                craftsmanshipSection.querySelector('.craftsmanship-icon')?.classList.remove('hover');
+            });
+        }
 
         // ===== PRODUCT BUTTONS =====
         document.querySelectorAll('.product-btn').forEach(btn => {
